@@ -1,1 +1,4 @@
+# Cargo 
 /target
+# nix build/run
+/result
