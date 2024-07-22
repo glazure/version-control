@@ -11,7 +11,7 @@
   }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
+  in rec {
     formatter.${system} = pkgs.alejandra;
 
     packages.${system}.default = let
@@ -24,9 +24,10 @@
         src = pkgs.lib.cleanSource ./.;
       };
 
-    devShells = pkgs.mkShell {
+    devShells.${system}.default = pkgs.mkShell {
+      inputsFrom = [packages.${system}.default];
+
       buildInputs = with pkgs; [
-        cargo
         rust-analyzer
         rustfmt
         clippy
